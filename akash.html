@@ -1,0 +1,1193 @@
+<html>
+<body>
+<p>Write a JDBC program to demonstrate prepared statement
+Write a program to descibe excecute update method
+Ans:
+import java.sql.*;  
+import java.io.*;  
+import com.mysql.jdbc.Driver;
+
+class JdbcPreparedS{  
+
+public static void main(String args[])throws Exception{  
+ 
+Class.forName("com.mysql.jdbc.Driver");  
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/4cse2","ncs","ncs");
+PreparedStatement ps=con.prepareStatement("insert into emp values(?,?,?)");  
+  
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));  
+  
+do{  
+System.out.println("enter id:");  
+int id=Integer.parseInt(br.readLine());  
+System.out.println("enter name:");  
+String name=br.readLine();  
+System.out.println("enter age:");  
+int age=Integer.parseInt(br.readLine());  
+  
+ps.setInt(1,id);  
+ps.setString(2,name);  
+ps.setInt(3,age);  
+
+int i=ps.executeUpdate();  
+System.out.println(i+" records affected");  
+  
+System.out.println("Do you want to continue: y/n");  
+String s=br.readLine();  
+if(s.startsWith("n")){  
+break;  
+}  
+}while(true);  
+  
+con.close();  
+}}  
+write a program to insert multiple records using batch processing
+ans:
+import java.sql.*;  
+class BatchRecords{  
+public static void main(String args[])throws Exception{  
+
+Class.forName("com.mysql.jdbc.Driver");  
+	
+	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/4cse2","ncs","ncs");  
+	
+Statement stmt=con.createStatement();  
+stmt.addBatch("insert into emp values(190,'abhi',40)");  
+stmt.addBatch("insert into emp values(191,'umesh',50)");  
+  
+stmt.executeBatch();//executing the batch  
+System.out.println("More than one record got inserted");
+con.commit();  
+con.close();  
+}
+}  
+Write a JDBC program to demonstrate callable statement.
+Write a program to descibe excecute method
+Ans:
+import java.sql.*;  
+public class CallableStat {  
+public static void main(String[] args) throws Exception{  
+	try{  
+Class.forName("com.mysql.jdbc.Driver");  
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/4cse2?noAccessToProcedureBodies=true","ncs","ncs");  
+CallableStatement stmt=con.prepareCall("{call insertrecord(?,?,?)}");  
+stmt.setInt(1,400);  
+stmt.setString(2,"Srinidhi");  
+stmt.setInt(3,42);  
+stmt.execute();  
+        System.out.println("emp table record insert success");  
+		}catch(Exception e){ System.out.println(e);}  
+}  
+}  
+Write a program to demonstrate excecute query method
+Write a JDBC program to demonstrate a simple statement.
+Write a program to establish connection to database using jdbc
+Ans:
+import java.sql.*;  
+class query{  
+public static void main(String args[])throws Exception{  
+
+Class.forName("com.mysql.jdbc.Driver");  
+	
+	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/4cse2","ncs","ncs");  
+	
+Statement stmt=con.createStatement();  
+Resultset rs=stmt.executequery(“select * from emp”);
+While(rs.next())
+{
+System.out.println(rs.getInt(1)+”\t”+rs.getString(2)+”\t”+rs.getInt(3));
+}
+Stmt.close();
+Con.close();
+}
+}
+
+
+
+PHP
+1.	Write a program to demonstrate scope of variables in PHP.
+Sol) <?php
+echo "LOCAL AND GLOBAL VARIABLES IN PHP";
+echo "<br>";
+$G=10;
+function printval(){
+	$L=12;
+	echo"The local variable is  $L";
+	echo"<br>";
+}
+printval();
+echo "The global variable is $G";
+echo "<br>";
+echo var_dump($GLOBALS["G"]);
+
+?>
+2.	Build a PHP program to demonstrate a recursive function.
+Sol) <?php
+function factorial($num)
+{
+if($num == 0){
+return 1;
+}
+else{
+	return ($num * factorial($num-1));
+}
+}
+echo factorial(6);
+?>
+
+3.Demonstrate a program using Array types in PHP.
+Sol) <?php
+
+echo "<h4>1)Indexed arrays:-"."</h4>";
+$cars=array("BMW","AUDI","NANO");
+//$cars[0]="BMW";
+//$cars[1]="AUDI";.......other way of declaration
+for($i=0;$i<count($cars);$i++)
+{
+    echo $cars[$i];
+    echo "<br>";
+}
+echo "<h4>2)Associative arrays:-"."</h4>";
+//uses namedkeys that are assigned
+$age=array("peter"=>"35",
+            "john"=>"20",
+            "ben"=>"10");
+//$age['peter']="35";
+ //$age['john']="20";
+ //$age['ben']="10";
+ 
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+
+echo "<h4>3)MultiDimensional arrays:-"."</h4>";
+/*array of products
+ *                productno ,productname, price
+ */
+$products=array(
+                array(01,"pen",10),
+                array(02,"pencil",5),
+                array(03,"book",100)
+                );
+for($row=0;$row<3;$row++)
+{
+    echo "row no:  ".$row;
+    echo "<ul>";
+    for($col=0;$col<3;$col++)
+    {
+        echo "<li>".$products[$row][$col]."</li>";
+    }
+     echo "</ul>";
+}
+
+?>
+
+4.Develop a PHP program to sort an array in PHP
+Sol) ?php
+
+$cars=array("Bmw","Audi","Nano");
+echo "<h5>initially:</h5>";
+for($i=0;$i<count($cars);$i++)
+{
+    echo $cars[$i];
+    echo "<br>";
+}
+echo "<h5>after sort():</h5>";
+sort($cars);
+for($i=0;$i<count($cars);$i++)
+{
+    echo $cars[$i];
+    echo "<br>";
+}
+echo "<h5>after rsort():</h5>";
+rsort($cars);
+for($i=0;$i<count($cars);$i++)
+{
+    echo $cars[$i];
+    echo "<br>";
+}
+
+$age=array("peter"=>"35",
+            "john"=>"20",
+            "ben"=>"10");
+echo "<h5>initially:</h5>";
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+asort($age);
+echo "<h5>after asort():</h5>";
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+ksort($age);
+echo "<h5>after ksort():</h5>";
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+arsort($age);
+echo "<h5>after arsort():</h5>";
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+krsort($age);
+echo "<h5>after krsort():</h5>";
+foreach($age as $x=>$y)//renaming as x for name and y for its respective age
+{
+    echo $x." : ".$y."<br>";
+}
+
+?>
+
+5.Demonstrate code reusability concept with an example. 
+Sol)
+<?php
+
+include 'Car.php';
+$t = new Car();
+$t->model = 'BMW';
+echo "<br>";
+echo $t->model;
+echo "<br>";
+echo $t->MyMethod();
+echo "<br>";
+$sum=$t->Add(6,4);
+echo "sum = ".$sum;
+
+?>
+
+
+6. Create an object in PHP and reuse the same.
+Sol) 
+ 
+
+7.Show an example of default value function.
+Sol) 
+function sayHello($name="Aaron"){  
+echo "Hello $name<br/>";  
+}  
+sayHello("Rajesh");  
+sayHello();//passing no value  
+sayHello("John");  
+
+ 8. Experiment with any five string functions in PHP. 
+Sol) <?php
+
+$name="myname is jdciuoi";
+echo "The string is: ". $name;
+echo "<br>";
+echo "The length of my string is: ". strlen($name);
+echo "<br>";
+echo "no of words: ". str_word_count($name);
+echo "<br>";
+echo "reverse of my string is: ". strrev($name);
+echo "<br>";
+echo "position of is in my string: ". strpos($name,"is");
+echo "<br>";
+echo "replacing name: ". str_replace("jdciuoi","shivani",$name);
+echo "<br>";
+echo "repeating name: ". str_repeat($name,3);
+echo "<br>";
+?>
+
+9.Experiment with any five Array functions in PHP.
+Sol) <!DOCTYPE html>
+<html>
+<body>
+
+<?php
+$cars=array("Volvo","BMW","Toyota"); 
+echo "I like " . $cars[0] . ", " . $cars[1] . " and " . $cars[2] . ".";
+echo "<br> array chunk<br>";
+$cars=array("Volvo","BMW","Toyota","Honda","Mercedes","Opel");
+print_r(array_chunk($cars,2));
+echo "<br> array pop<br>";
+$a=array("red","green","blue");
+array_pop($a);
+print_r($a);
+echo "<br> array push<br>";
+$a=array("red","green");
+array_push($a,"blue","yellow");
+print_r($a);
+echo "<br> array count<br>";
+$cars=array("Volvo","BMW","Toyota");
+echo count($cars);
+?>
+
+</body>
+</html>
+Output:
+I like Volvo, BMW and Toyota.
+array chunk
+Array ( [0] => Array ( [0] => Volvo [1] => BMW ) [1] => Array ( [0] => Toyota [1] => Honda ) [2] => Array ( [0] => Mercedes [1] => Opel ) )
+array pop
+Array ( [0] => red [1] => green )
+array push
+Array ( [0] => red [1] => green [2] => blue [3] => yellow )
+array count
+3
+
+ 10.Demonstrate a program on constants using PHP.
+Sol) <?php
+define("GREETING", "Welcome to W3Schools.com!");
+
+function myTest() {
+  echo GREETING;
+}
+ 
+myTest();
+?>
+
+11. Write a program using datatypes in PHP. 
+Sol) <?php
+echo "<h4>1)Strings:-"."</h4>";
+$s1="Everyone";
+$s2="good morning ".$s1;
+$s3='hello.....'.$s1;
+echo $s2."<br>";
+echo $s3."<br>";
+var_dump($s2);
+echo "<br>";
+var_dump($s3);
+echo "<br>";
+echo "2)Integers:-";
+$i=100;
+ var_dump($i);
+ 
+echo "<br>";
+echo "<h4>3)Float:-</h4>";
+$f=10.234567;
+ var_dump($f);
+echo "<br>";
+echo "<h4>4)Boolean:-</h4>";
+$b=true;
+ var_dump($b);
+ echo "<br>";
+echo "<h4>5)Null:-"."</h4>";
+$n=null;
+ var_dump($n);
+ echo "<br>";
+echo "<h4>6)Arrays:-</h4>";
+$cars=array("BMW","AUDI","VW","Toyota");
+ var_dump($cars);
+ echo "<br>";
+  echo "<br>";
+echo "<h4>7)Object:-</h4>";
+class Fruit {
+  public $name;
+  public $color;
+  function set_name($name) {
+    $this->name = $name;
+  }
+  function get_name() {
+    return $this->name;
+  }
+}
+$apple = new Fruit();
+$banana = new Fruit();
+$apple->set_name('Apple');
+$banana->set_name('Banana');
+echo $apple->get_name();
+echo "<br>";
+echo $banana->get_name();
+?>
+12.Experiment with super global variable $-SERVER.
+Sol)
+13.Create a PHP program to validate user-inputs.
+Sol)
+<html> <head><title>PHP Form Validation</title>
+</head>
+<body>
+   <?php
+        //define variables and set to empty values
+        $name=$email=$gender=$comment="";
+        if($_SERVER['REQUEST_METHOD']=="POST")
+        {
+            $name = test_input($_POST["name"]);
+            $email=test_input($_POST["email"]);
+            $comment=test_input($_POST["comment"]);
+            $gender=test_input($_POST["gender"]);
+        }
+        
+        function test_input($data)
+        {
+            $data=trim($data);
+            $data= stripslashes($data);
+            $data= htmlspecialchars($data);
+            return $data;
+        }
+
+        ?>
+        <h2>Registration</h2>
+        <form method="post" action="<?php $_SERVER["PHP_SELF"];?>">
+            
+            <table>
+                
+                <tr>
+                    <td>Name</td>
+                    <td><input  type="text" name="name"></td>
+                </tr>
+                
+                <tr>
+                    <td>email</td>
+                    <td><input  type="text" name="email"></td>
+                </tr>
+                
+                 <tr>
+                     <td>comment</td>
+                     <td><textarea name="comment" rows="5" cols="40"></textarea></td>
+                </tr>
+                
+                
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                        <input type="radio" name="gender" value="female">Female
+                        <input type="radio" name="gender" value="male">male
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+          <input type="submit" name="submit" value="submit">
+                    </td>
+                </tr>
+   </table>
+     </form>
+        <?php
+        
+        echo "<h2>Your details</h2>";
+        echo "name :".$name;
+        echo "<br>";
+        echo "email :".$email;
+        echo "<br>";
+        echo "comment : ".$comment;
+        echo "<br>";
+        echo "gender : ".$gender;
+    ?>
+    </body>
+</html>
+
+14.Develop a code using call by value and call by reference in PHP
+Sol)
+call by value
+1.	<?php  
+2.	function increment($var){  
+3.	    $var++;  
+4.	    return $var;  
+5.	}  
+6.	$a = 5;  
+7.	$b = increment($a);  
+8.	echo $a; //Output: 5  
+9.	echo $b; //Output: 6   
+10.	?>   
+       Call by reference
+1.	<?php  
+2.	function increment(&$var){  
+3.	    $var++;  
+4.	    return $var;  
+5.	}  
+6.	$a = 5;  
+7.	$b = increment($a);  
+8.	echo $a; //Output: 6  
+9.	echo $b; //Output: 6   
+10.	?>  
+
+
+
+HTML
+1.Write a program to demonstrate frames.
+Sol) 
+FRAMESET.html
+<html>
+<head>
+<title>FREAMES</title>
+</head>
+<frameset rows="30%,*">
+  <frame name="f1" src="f1.html"/>
+<frameset cols="40%,*">
+  <frame name="f2" src="f2.html"/>
+  <frame name="f3" src="f3.html"/>
+</frameset>
+</html>
+ f1.html
+<html>
+<body>
+<marquee><h3>welcome to f1</h3></marquee>
+</body>
+</html>
+ f2.html
+<html>
+<body>
+<a href="data:image/jpeg;base64==" target="f3">img1</a>
+<br>
+<a href="data:image/jpeg;base64 " target="f3">img2
+</a></body>
+</html>
+2. Create a registeration form with different types of inputs.
+Sol)<html>
+<head>
+<title>FORMS</title>
+</head>
+<body>
+<h3>This is forms tutorial</h3>
+<form action="backend.php" method="post">
+<div>
+Name:<input type="text" name="myname">
+</div>
+ <div>
+Roll:<input type="text" name="myRoll">
+</div>
+<div>
+Email:<input type="text" name="myEmail">
+</div>
+<div>
+Date:<input type="date" name="myname">
+</div>
+<div>
+Gender: Male<input type="radio" name="mygender">
+        Female<input type="radio" name="mygender">
+		other<input type="radio" name="mygender">
+		</div>
+<div>
+<input type="submit" value="Submitnow">
+</div>
+3) Write a program to describe anchor tag.
+Sol)
+<html>
+<head>
+<title>Anchor-tag</title>
+</head>
+<body>
+<a href="https://www.google.com" target="_blank">Google-home page</a>
+</body>
+</html>
+4. Create your class timetable using html tags
+Sol)
+<!DOCTYPE html>
+<html>
+<head>
+<title>4CSE-2 TIMETABLE</title>
+</head>
+<body>
+<table border="1"
+       cellpadding="3"
+	   cellspacing="1"
+	   body style="background-color:red;">
+
+<tr>
+<th>DAY/TIME</th>
+<th>9:10am-10:00am</th>
+<th>10:00am-10:50am</th>
+<th>10:50am-11:40am</th>
+<th>11:40am-12:30am</th>
+<th rowspan="7">   L <br> U <br> N <br>C<br> H <br> B <br> R <br> E <br> A <br> K  </th>
+<th>1:30am-2:20am</th>
+<th>2:20am-3:10am</th>
+<th>3:10am-4:00am</th>
+</tr>
+<tr>
+<th>MONDAY</th>
+<th>WP</th>
+<th>TOC</th>
+<th>AM</th>
+<th>AM(T)-B1<br>OS(T)-B2 233</th>
+<th colspan="3">WPLAB SE-LAB+NCS+PP<br>DBMSLAB WT-LAB+SS+TP</th>
+</tr>
+<tr>
+<th>TUESDAY</th>
+<th>AM</th>
+<th>OS</th>
+<th>DBMS</th>
+<th>TOC</th>
+<th colspan="3">WPLAB SE-LAB+NCS+MS<br>DBMSLAB WT-LAB+SS+KJ</th>
+</tr>
+<tr>
+<th>WEDNESDAY</th>
+<th>OS</th>
+<th>DBMS</th>
+<th>TOC</th>
+<th>WP</th>
+<th>TOC(T)-B1<br>DBMS(T)-B2<br>B5 302</th>
+<th>DBMS(T)B1<br>WP(T)-B2<br>B5 302</th>
+<th>OS(T)-B1<br>AM(T)-B2<br>B5 302</th>
+</tr>
+<tr>
+<th>THURSDAY</th>
+<th>DBMS</th>
+<th>WP</th>
+<th>OS</th>
+<th>AM</th>
+<th colspan="2">SIS<br> B-IV 110</th>
+<th>MYC</th>
+</tr>
+<tr>
+<th>FRIDAY</th>
+<th colspan="3">OS LAB IBM LAB<br>+CS+GA+SS+NDP</th>
+<th>ASSOC</th>
+<th>DBMS</th>
+<th>WP(T)-B1<br>TOC(T)-B2 B5 302</th>
+<th>LIBRARY</th>
+</tr>
+<tr>
+<th>SATURDAY</th>
+<th colspan="2">ENVIRONMENTAL STUDIES<br>(for lateral entry students<br>online mode)</th>
+<th>       </th>
+<th>       </th>
+<th>       </th>
+<th>       </th>
+<th>       </th>
+<th>       </th>
+</tr>
+</body>
+</html>
+5. Create a static webpage to display different types of lists.
+Sol)
+<html>
+<head>
+<title>VARIOUS LISTS</title>
+</head>
+<body>
+<h3>unordered list</h3>
+<ul>
+<li>coffee</li>
+<li>tea</li>
+<li>milk</li>
+</ul>
+<h3>ordered list</h3>
+<ol>
+<li>coffee</li>
+<li>tea</li>
+<li>milk</li>
+</ol>
+<h3>description list</h3>
+<dl>
+<dt>coffee</dt>
+<dd>dark drink</dd>.
+<dt>milk</dt>
+<dd>white drink</dd>
+</dl>
+</body>
+</html>
+6. Write a program using image tag and link tag.
+Sol)
+<html>
+<head>
+<title>img and link tag</title>
+<link rel="stylesheet" type="text/css" href="csssel.css">
+</head>
+<body>
+<img src="shivani.jpg" alt="img not found">
+<h3>changing color using link tag</h3>
+</body>
+csssel.css
+h3
+{
+	color:blue;
+	}
+CSS
+7. Write a program to describe different types of css.
+Sol)
+<html>
+<head>
+<title>CSS types</title>
+<style>
+h3{
+color:green;
+}
+</style>
+<link href="csssel.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h2 style="color:yellow">THIS IS INLINE CSS</h2>
+<h3>THIS IS INTERNAL CSS</h3>
+<h4>THIS IS EXTERNAL CSS</h4>
+</body>
+</html>
+csssel.css
+h4
+{
+	color:blue;
+	}
+8. Write a program using 
+Div tag 
+Span tag
+Sol)
+<html>
+<head>
+<title>Div and Span tags</title>
+<style>
+span{
+color:blue;
+}
+</style>
+</head>
+<body>
+<div>
+<h4>contents under div tag<span>and span tag</span></h4>
+</div>
+</body>
+</html>
+9. Write a program to describe different types of selectors
+Sol)
+<html>
+<head>
+<title>SELECTORS</title>
+<style>
+h1{
+color:yellow;
+}
+#id1{
+color:green;
+}
+.bgcolor{
+background-color:blue;
+}
+p,footer{
+color:red;
+}
+</style>
+</head>
+<body>
+<h1>ELEMENT SELECTOR<h1>
+<h3 id="id1">ID SELECTOR</h3>
+<h3 class="bgcolor">CLASS SELECTOR</h3>
+<p>GROUPED SELECTOR</p>
+<footer>GROUPED SELECTOR</footer>
+</body>
+</html>
+10. Create a table and add background styles to it .
+Sol)
+<html>
+<body>
+<h1>ACADEMIC QUALIFICATIONS</h1>
+<table border="2"
+       cellpadding="3"
+	   cellspacing="2"
+	   body style="background-color: #f1f1f1;"
+	   body style="color:white">
+	   <tr>
+	   <th>DEGREE</th>
+	   <th>INSTITUTION</th>
+	   <th>SCORE</th>
+	   </tr>
+	   <tr>
+	   <td>BTECH(CSE)</td>
+	   <td>kakatiya institute of <br>technology and science</td>
+	   <td>7.00(still studying)</td>
+	   </tr>
+	   <tr>
+	   <td>Senior Secondary education</td>
+	   <td>SR-EDU Center</td>
+	   <td>80%</td>
+	   </tr>
+	   <tr>
+	   <td>Central Board Of <br>Secondary Education(CBSE)</td>
+	   <td>Warangal Public school</td>
+	   <td>80%</td>
+	   </table>
+ </body>
+ </html>
+11. Write a program to describe box model
+Sol)
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div {
+  background-color: lightgrey;
+  width: 300px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+}
+</style>
+</head>
+<body>
+
+<h2>Demonstrating the Box Model</h2>
+
+<p>The CSS box model is essentially a box that wraps around every HTML element. It consists of: borders, padding, margins, and the actual content.</p>
+
+<div>This text is the content of the box. We have added a 50px padding, 20px margin and a 15px green border. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+
+</body>
+</html>
+12. Write a program to describe counters in css
+Sol)
+<html>
+<head>
+<title>COUNTERS</title>
+<style>
+body{
+counter-reset:x;
+}
+h2::before{
+counter-increment:x;
+content:"section"counter(x);
+</style>
+</head>
+<body>
+<h2>USING CSS COUNTER</h2>
+<h2>HTML TUTORIAL</h2>
+</body>
+</html>
+
+
+JAVASCRIPT
+1. write a program to validate input given by user
+<html>
+<body>
+<script>  
+function validateform(){  
+var name=document.myform.name.value;  
+var password=document.myform.password.value;  
+  
+if (name==null || name==""){  
+  alert("Name can't be blank");  
+  return false;  
+}else if(password.length<6){  
+  alert("Password must be at least 6 characters long.");  
+  return false;  
+  }  
+}  
+</script>  
+<body>  
+<form name="myform" method="post" action="http://www.javatpoint.com/javascriptpages/valid.jsp" onsubmit="return validateform()" >  
+Name: <input type="text" name="name"><br/>  
+Password: <input type="password" name="password"><br/>  
+<input type="submit" value="register">  
+</form>  
+</body>
+</html>
+2. write a program to describe different types of functions
+a)anonymus functions 
+b) dynamic functions
+sol) <!DOCTYPE html>
+<html>
+<body>
+	<h1>Demo</h1>
+	
+	<script>
+		function greet(firstName, lastName) {
+			alert("Hello " + firstName + " " + lastName);
+		}
+
+		greet("Bill", "Gates");
+		greet(100, 200);
+  
+      let show = function() {
+    document.write('Anonymous function');
+};
+
+show();
+    </script>
+</body>
+</html>
+3. write a program to create popup boxes using javascript.
+Sol) <!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Prompt</h2>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  let text;
+  let person = prompt("Please enter your name:", "Harry Potter");
+  if (person == null || person == "") {
+    text = "User cancelled the prompt.";
+  } else {
+    text = "Hello " + person + "! How are you today?";
+  }
+  document.getElementById("demo").innerHTML = text;
+}
+</script>
+
+</body>
+</html>
+4) write a program to create a simple calculator
+Sol) <!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <input type="text" id="display">
+    <br>
+    <button onclick="addToDisplay('1')">1</button>
+    <button onclick="addToDisplay('2')">2</button>
+    <button onclick="addToDisplay('3')">3</button>
+    <button onclick="addToDisplay('+')">+</button>
+    <br>
+    <button onclick="addToDisplay('4')">4</button>
+    <button onclick="addToDisplay('5')">5</button>
+    <button onclick="addToDisplay('6')">6</button>
+    <button onclick="addToDisplay('-')">-</button>
+    <br>
+    <button onclick="addToDisplay('7')">7</button>
+    <button onclick="addToDisplay('8')">8</button>
+    <button onclick="addToDisplay('9')">9</button>
+    <button onclick="addToDisplay('')"></button>
+    <br>
+    <button onclick="addToDisplay('0')">0</button>
+    <button onclick="addToDisplay('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="addToDisplay('/')">/</button>
+    <br>
+    <button onclick="clearDisplay()">Clear</button>
+    
+    <script>
+      function addToDisplay(value) {
+        document.getElementById('display').value += value;
+      }
+      
+      function calculate() {
+        var expression = document.getElementById('display').value;
+        var result = eval(expression);
+        document.getElementById('display').value = result;
+      }
+      
+      function clearDisplay() {
+        document.getElementById('display').value = '';
+      }
+    </script>
+  </body>
+</html>
+5. write a to perform arthematic operations on inputs using
+Sol) <!DOCTYPE html>
+<html>
+<head>
+    <title>JavascriptArithmeticOperators </title>
+</head>
+<body>
+    <h1>PerformingArithmeticOperations </h1>
+<script>
+   var a = 12, b = 3;
+   var addition, subtraction, multiplication, division, modulus;
+
+   addition = a + b; //addition of 3 and 12
+   subtraction = a - b; //subtract 3 from 12
+   multiplication = a * b; //Multiplying both
+   division = a / b; //dividing 12 by 3 (number of times)
+   modulus = a % b; //calculation the remainder
+
+   document.write("Addition of " +a +' and ' +b +" is = " + addition + "<br />");
+   document.write("Subtraction of " +a +' and ' +b +" is = " + subtraction + "<br />");
+   document.write("Multiplication of " +a +' and ' +b +" is = " + multiplication + "<br />");
+   document.write("Division of " +a +' and ' +b +" is = " + division + "<br />");
+   document.write("Modulus of " +a +' and ' +b +" is = " + modulus + "<br />");
+</script>
+</body>
+</html>
+6.write a program to demonstrate events in javascript.
+Sol) <!doctype html>
+<html>
+ 
+<head>
+  <script>
+    function hiThere() {
+			alert('Hi there!');
+		          }
+</script>
+</head>
+ 
+<body>
+    <button type="button" onclick="hiThere()" style="margin-left: 50%;"> click me event </button>
+    <img onload="alert('Image completely loaded')"
+         alt="GFG-Logo"
+         src=
+"https://media.geeksforgeeks.org/wp-content/cdn-uploads/GeeksforGeeksLogoHeader.png">
+</body>
+ 
+</html>
+
+1. Demonstrate jsp page using page directive
+page.jsp
+<%@page import="java.util.Date"%>
+<%@page contentType="text/html"%>
+<%@page errorPage="error.jsp"%>
+<!Doctype html>
+<html>
+<head></head>
+<body>
+<% Date d = new Date()%>
+<%=d%>
+<%="iam in lab"%>
+<%
+int z=20/0;
+out.print(z);
+%>
+</body>
+</html>
+error.jsp
+<%@page isErrorPage="true".
+<!Doctype html>
+<html>
+<head></head>
+<body>
+<h1>error</h1>
+<%="exception is:"%>
+<%=exception%>
+</body>
+</html>
+...........................
+2. Demonstrate jsp page using taglib directive
+<%@page contentType="text/html">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jst1/core"%>
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<c:set var="name" value="sushma">
+</c:set>
+<c:out value="${name}">
+</c:out>
+</body>
+</html>
+output:
+sushma
+.................................
+3. Demonstrate jsp page using include directive
+test.html
+<1doctype html>
+<html>
+<head></head>
+<body>
+<h1>hello world</h1>
+</body>
+</html>
+include.jsp
+<%@page include file="test.html"%>
+<!doctype html>
+<html>
+<head></head>
+<body>  
+<%=5+6%>
+</body>
+</html>
+.......................................
+4. Demonstrate jsp page using scripting elements(scriplet,declaration,expression)
+<%@page language="java" contentType="text/html"%>
+<!doctype html>
+<html>
+<head></head>
+<body>
+<%--demo--%>
+
+<%! int val=cube(3);%>
+value of val:<%out.println(val);%>
+</body>
+</html>
+...................
+5.create a jsp page to print current date and time
+<%@page language="java" contentType="text/html"%>
+<!doctype html>
+<html>
+<head></head>
+<body>
+
+<%
+Date d=new Date();
+%>
+<%out.print(“date is:”);%>
+<%=d%>
+</body>
+</html>
+
+
+6.create a jsp page to describe .exception handling
+index.html
+<form name="myForm" action="demo.jsp">
+enter no1:<input type="text" name="num1"/>
+<br>
+enter no2:<input type="text" name="num2"/>
+<br>
+<input type="submit" value="divide"/>
+</form>
+demp.jsp
+<%@page errorPage="error.jsp"%>
+<!doctype html>
+<html>
+<head></head>
+<body>
+<%
+string n1=request.getParameter("num1");
+string n2=request.getParameter("num2");
+int a=Integer.parseInt(n1);
+int b=Integer.parseInt(n2);
+int c=a/b;
+out.print("division: "+c);
+%>
+</body>
+</html>
+error.jsp
+<%@page isErrorPage="true"%>
+<html>
+<head></head>
+<body>
+<h1>error!</h1>
+exception:<%=exception%>
+..............
+6.create a jsp page to auto refresh a page
+<%@page import ="java.util.*"%>
+<%@page language="java" contentType="text/html"%>
+<!doctype html>
+<html>
+<head></head>
+<body>
+<h1>
+<%
+response.setHeader("refresh","1");
+Calendar c=new Gregoriancalendar();
+int h=c.get(Calendar.hour);
+int m=c.get(Calendar.minute);
+int s=c.get(Calendar.second);
+String time=h+":"+m+":"+s;
+if((c.getCalendar.AM_PM)==0)
+time+="AM";
+else
+time+="PM";
+out.println(time);
+%>
+</h1>
+</body>
+</html>
+.....................................
+8. write a program to display a given number in words.
+ 
+ 
+…………………………………
+9.write a program to demonstrate actions in jsp
+index.jsp
+<html>
+<body>
+<h1>index page</h1>
+<jsp:forward page="printdate.jsp"/>
+</body>
+</html>
+printdate.jsp
+<%@page include="java.util.Date"%>
+<%!doctype html>
+<html>
+<head></head>
+<body>
+<%
+Date d=new Date();
+%>
+<%=d%>
+</body>
+</html>
+...................................
+</p>
+</body>
+</html>
+
